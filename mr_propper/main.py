@@ -8,7 +8,7 @@ def parse_args() -> argparse.Namespace:
     pass
 
 
-def main():
+def main() -> None:
     args = parse_args()
     ast_tree = get_ast_tree(args.filename)
     if not ast_tree:
