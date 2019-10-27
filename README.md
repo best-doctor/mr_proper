@@ -3,7 +3,7 @@
 Static Python code analyzer, that tries to check if functions in code are
 [pure](https://en.wikipedia.org/wiki/Pure_function) or not and why.
 
-![Have fun with mr Clean](https://raw.githubusercontent.com/best-doctor/mr_proper/master/docs_img/mr_clean_sponge.png)
+![Have fun with mr Clean](https://raw.githubusercontent.com/best-doctor/mr_proper/master/docs_img/mr_clean_sponge.jpg)
 
 *DISCLAIMER*: this library is very experimental and has a lot of edge cases.
 Functions that mr. Proper marks as pure can be not pure, but they are
