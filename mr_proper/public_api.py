@@ -3,13 +3,13 @@ from functools import partial
 from typing import overload, Union, List, Callable, Optional
 from typing_extensions import Literal
 
-from mr_propper.common_types import AnyFuncdef, PureCheckResult
-from mr_propper.pure_validators import (
+from mr_proper.common_types import AnyFuncdef, PureCheckResult
+from mr_proper.pure_validators import (
     has_no_blacklisted_calls, uses_only_args_and_local_vars,
     has_returns, not_mutates_args, not_has_local_imports, not_has_forbidden_arguments_types,
     not_uses_self_or_class_vars,
 )
-from mr_propper.utils.ast_pure import get_not_pure_internal_calls
+from mr_proper.utils.ast_pure import get_not_pure_internal_calls
 
 PureValidatorType = Callable[[AnyFuncdef, Optional[ast.Module]], List[str]]
 
@@ -42,7 +42,7 @@ def is_function_pure(
     with_errors: bool = False,
     recursive: bool = False,
     pyfilepath: str = None,
-    extra_forbidden_argument_type_names: List[str] = None
+    extra_forbidden_argument_type_names: List[str] = None,
 ) -> Union[bool, PureCheckResult]:
     validators: List[PureValidatorType] = [
         has_no_blacklisted_calls,

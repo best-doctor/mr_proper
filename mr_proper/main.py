@@ -1,8 +1,8 @@
 import sys
 import argparse
 
-from mr_propper.public_api import is_function_pure
-from mr_propper.utils.ast import get_ast_tree, get_all_funcdefs_from
+from mr_proper.public_api import is_function_pure
+from mr_proper.utils.ast import get_ast_tree, get_all_funcdefs_from
 
 
 def parse_args() -> argparse.Namespace:

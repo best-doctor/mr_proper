@@ -4,8 +4,8 @@ from typing import Optional, List, Union, Type, TypeVar, cast
 
 from stdlib_list import stdlib_list
 
-from mr_propper.common_types import AnyFuncdef
-from mr_propper.config import TARGET_PYTHON_VERSION
+from mr_proper.common_types import AnyFuncdef
+from mr_proper.config import TARGET_PYTHON_VERSION
 
 
 T = TypeVar('T', bound=ast.AST)

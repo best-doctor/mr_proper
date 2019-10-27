@@ -5,8 +5,8 @@ from typing import Optional, List, cast
 
 from mypy_extensions import TypedDict
 
-from mr_propper.common_types import AnyFuncdef
-from mr_propper.utils.ast import BUILTINS_LIST, get_nodes_from_funcdef_body, get_ast_tree
+from mr_proper.common_types import AnyFuncdef
+from mr_proper.utils.ast import BUILTINS_LIST, get_nodes_from_funcdef_body, get_ast_tree
 
 
 class EntityImportInfo(TypedDict):
@@ -20,7 +20,7 @@ def get_not_pure_internal_calls(
     file_ast_tree: ast.Module,
     pyfilepath: str,
 ) -> List[str]:
-    from mr_propper.public_api import is_function_pure
+    from mr_proper.public_api import is_function_pure
 
     not_pure_calls: List[str] = []
     for call_node in get_nodes_from_funcdef_body(funcdef_node, [ast.Call]):

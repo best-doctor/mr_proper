@@ -1,15 +1,15 @@
 import ast
 from typing import List, Optional, Callable, cast
 
-from mr_propper.common_types import AnyFuncdef
-from mr_propper.config import (
+from mr_proper.common_types import AnyFuncdef
+from mr_proper.config import (
     CALLABLES_BLACKLIST, ATTRIBUTES_BLACKLIST, FORBIDDEN_ARGUMENT_TYPES,
     FORBIDDEN_ATTR_CALLS_FOR_ARGS)
-from mr_propper.utils.ast import (
+from mr_proper.utils.ast import (
     get_nodes_from_funcdef_body, is_imported_from_stdlib,
     get_local_var_names_from_funcdef,
     BUILTINS_LIST)
-from mr_propper.utils.python_naming import is_python_class_name
+from mr_proper.utils.python_naming import is_python_class_name
 
 
 def has_no_blacklisted_calls(
@@ -137,9 +137,7 @@ def not_has_forbidden_arguments_types(
     if extra_forbidden_argument_type_names:
         forbidden_argument_type_names += extra_forbidden_argument_type_names
     for argument in funcdef_node.args.args:
-        if not argument.annotation:
-            continue
-        for annotation_part_node in ast.walk(argument.annotation):
+        for annotation_part_node in ast.walk(argument.annotation) if argument.annotation else []:
             if not isinstance(annotation_part_node, ast.Name):
                 continue
             type_without_prefix = annotation_part_node.id.split('.')[-1]

@@ -1,18 +1,38 @@
-# mr. Propper
+# mr. Proper
 
 Static Python code analyzer, that tries to check if functions in code are
 [pure](https://en.wikipedia.org/wiki/Pure_function) or not and why.
 
-*DISCLAIMER*: this library is developer with document driven development,
-so some of described functionality may be not true.
+![Have fun with mr Clean](https://raw.githubusercontent.com/best-doctor/mr_proper/master/docs_img/mr_clean_sponge.png)
+
+*DISCLAIMER*: this library is very experimental and has a lot of edge cases.
+Functions that mr. Proper marks as pure can be not pure, but they are
+usually cleaner than other functions.
 
 
 ## Installation
 
-    pip install mr_propper
+    pip install mr_proper
+
+
+# What mr. Proper check
+
+1. that function has no blacklisted calls (like `print`)
+and blacklisted attributes access (like `smth.count`);
+2. that function not uses global objects (only local vars and function arguments);
+3. that function has al least one return;
+4. that function not mutates it's arguments;
+5. that function has no local imports;
+6. that function has no arguments of forbidden types (like ORM objcets);
+7. that function not uses `self`, `class` or `super`;
+8. that function has calls of only pure functions.
+
+This list is not enought to say that function is pure and some points
+are quite controversial, but it's a nice start.
 
 
 ## Example
+
 Console usage:
 
     # test.py
@@ -46,12 +66,14 @@ Usage inside Python code sample:
 
 
 ## Parameters
+
 CLI interface:
 - `filepath`: path to .py file to check;
 - `--recursive`: require inner calls to be pure for function pureness.
 
 
 ## Code prerequisites
+
 1. Python 3.7+;
 2. Functions are fully type-annotated;
 3. No dynamic calls (line `getattr(sender, 'send_' + message_type)(message)`).
