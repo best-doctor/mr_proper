@@ -25,8 +25,8 @@ Console usage:
     
     
     $ mr_propper test.py
-    test:add_one is pure!
-    test:print_amount_of_users is not pure because of:
+    add_one is pure!
+    print_amount_of_users is not pure because of:
         it uses forbidden argument types (QuerySet)
         it calls not pure functions (print)
         it has no return
@@ -34,14 +34,14 @@ Console usage:
 Usage inside Python code sample:
 
     >>> import ast
-    >>> from mr_propper import is_function_clean
+    >>> from mr_propper import is_function_pure
     >>> funcdef = ast.parse('''
         def add_one(n: int) -> int:
             return n + 1
     ''').body[0]
-    >>> is_function_clean(funcdef)
+    >>> is_function_pure(funcdef)
     True
-    >>> is_function_clean(funcdef, with_errors=True)
+    >>> is_function_pure(funcdef, with_errors=True)
     (True, [])
 
 
