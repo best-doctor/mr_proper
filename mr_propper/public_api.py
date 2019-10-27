@@ -1,4 +1,5 @@
-from typing import overload, Union, List
+import ast
+from typing import overload, Union, List, Callable, Optional
 from typing_extensions import Literal
 
 from mr_propper.common_types import AnyFuncdef, PureCheckResult
@@ -9,9 +10,13 @@ from mr_propper.pure_validators import (
 )
 
 
+PureValidatorType = Callable[[AnyFuncdef, Optional[ast.Module]], List[str]]
+
+
 @overload
 def is_function_pure(
     funcdef_node: AnyFuncdef,
+    file_ast_tree: ast.Module,
     with_errors: Literal[False],
 ) -> bool:
     ...
@@ -20,6 +25,7 @@ def is_function_pure(
 @overload
 def is_function_pure(
     funcdef_node: AnyFuncdef,
+    file_ast_tree: ast.Module,
     with_errors: Literal[True],
 ) -> PureCheckResult:
     ...
@@ -27,9 +33,10 @@ def is_function_pure(
 
 def is_function_pure(
     funcdef_node: AnyFuncdef,
+    file_ast_tree: ast.Module = None,
     with_errors: bool = False,
 ) -> Union[bool, PureCheckResult]:
-    validators = [
+    validators: List[PureValidatorType] = [
         has_no_blacklisted_calls,
         uses_only_args_and_local_vars,
         has_returns,
@@ -42,8 +49,8 @@ def is_function_pure(
     errors: List[str] = []
     is_pure = True
     for validator_callable in validators:
-        is_validator_ok, validator_errors = validator_callable(funcdef_node)
-        if not is_validator_ok:
+        validator_errors = validator_callable(funcdef_node, file_ast_tree)
+        if validator_errors:
             is_pure = False
-            errors += validator_errors
+            errors += list(set(validator_errors))
     return (is_pure, errors) if with_errors else is_pure
