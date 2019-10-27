@@ -1,5 +1,8 @@
 # mr. Proper
 
+[![Build Status](https://travis-ci.org/best-doctor/mr_proper.svg?branch=master)](https://travis-ci.org/best-doctor/mr_proper)
+[![PyPI version](https://badge.fury.io/py/mr-proper.svg)](https://badge.fury.io/py/mr-proper)
+
 Static Python code analyzer, that tries to check if functions in code are
 [pure](https://en.wikipedia.org/wiki/Pure_function) or not and why.
 
