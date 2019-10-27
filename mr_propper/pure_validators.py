@@ -130,8 +130,12 @@ def not_has_local_imports(
 def not_has_forbidden_arguments_types(
     funcdef_node: AnyFuncdef,
     file_ast_tree: Optional[ast.Module],
+    extra_forbidden_argument_type_names: List[str] = None,
 ) -> List[str]:
     errors: List[str] = []
+    forbidden_argument_type_names = FORBIDDEN_ARGUMENT_TYPES
+    if extra_forbidden_argument_type_names:
+        forbidden_argument_type_names += extra_forbidden_argument_type_names
     for argument in funcdef_node.args.args:
         if not argument.annotation:
             continue
@@ -139,7 +143,7 @@ def not_has_forbidden_arguments_types(
             if not isinstance(annotation_part_node, ast.Name):
                 continue
             type_without_prefix = annotation_part_node.id.split('.')[-1]
-            if type_without_prefix in FORBIDDEN_ARGUMENT_TYPES:
+            if type_without_prefix in forbidden_argument_type_names:
                 errors.append(f'it has type {type_without_prefix} in argument types')
     return errors
 

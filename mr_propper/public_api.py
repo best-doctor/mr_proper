@@ -1,4 +1,5 @@
 import ast
+from functools import partial
 from typing import overload, Union, List, Callable, Optional
 from typing_extensions import Literal
 
@@ -41,6 +42,7 @@ def is_function_pure(
     with_errors: bool = False,
     recursive: bool = False,
     pyfilepath: str = None,
+    extra_forbidden_argument_type_names: List[str] = None
 ) -> Union[bool, PureCheckResult]:
     validators: List[PureValidatorType] = [
         has_no_blacklisted_calls,
@@ -48,7 +50,10 @@ def is_function_pure(
         has_returns,
         not_mutates_args,
         not_has_local_imports,
-        not_has_forbidden_arguments_types,
+        partial(
+            not_has_forbidden_arguments_types,
+            extra_forbidden_argument_type_names=extra_forbidden_argument_type_names,
+        ),
         not_uses_self_or_class_vars,
     ]
 
