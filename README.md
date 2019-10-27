@@ -71,7 +71,7 @@ Usage inside Python code sample:
 ## Parameters
 
 CLI interface:
-- `filepath`: path to .py file to check;
+- `filepath`: path to .py file to check (directories are not supported for now);
 - `--recursive`: require inner calls to be pure for function pureness.
 
 
@@ -79,7 +79,7 @@ CLI interface:
 
 1. Python 3.7+;
 2. Functions are fully type-annotated;
-3. No dynamic calls (line `getattr(sender, 'send_' + message_type)(message)`).
+3. No dynamic calls (like `getattr(sender, 'send_' + message_type)(message)`).
 
 
 ## Contributing
