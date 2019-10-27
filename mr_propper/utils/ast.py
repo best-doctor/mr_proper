@@ -1,10 +1,16 @@
 import ast
 from typing import Optional, List, Union, Type, TypeVar, cast
 
+from stdlib_list import stdlib_list
+
 from mr_propper.common_types import AnyFuncdef
+from mr_propper.config import TARGET_PYTHON_VERSION
 
 
 T = TypeVar('T', bound=ast.AST)
+
+
+STDLIB_MODULES_NAMES = stdlib_list(TARGET_PYTHON_VERSION)
 
 
 def get_ast_tree(pyfilepath: str) -> Optional[ast.Module]:
@@ -33,8 +39,13 @@ def get_nodes_from_funcdef_body(
     return nodes  # type: ignore
 
 
-def is_imported_from_stdlib(name: str, file_ast_tree: ast.Module) -> bool:
-    return False
+def is_imported_from_stdlib(name: str, file_ast_tree: ast.Module) -> Optional[bool]:
+    for import_node in get_all_global_import_nodes(file_ast_tree):
+        for full_import_path in get_full_import_pathes(import_node):
+            if full_import_path.split('.')[-1] == name:
+                base_module = full_import_path.split('.')[0]
+                return base_module in STDLIB_MODULES_NAMES
+    return None
 
 
 def get_local_var_names_from_funcdef(funcdef_node: AnyFuncdef) -> List[str]:
@@ -56,3 +67,22 @@ def get_local_var_names_from_loop(loop_node: Union[ast.comprehension, ast.For]) 
     elif isinstance(loop_node.target, ast.Tuple):
         return [e.id for e in loop_node.target.elts if isinstance(e, ast.Name)]
     return []
+
+
+def get_all_global_import_nodes(file_ast_tree: ast.AST) -> List[Union[ast.ImportFrom, ast.Import]]:
+    nodes_with_local_scope = {ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef}
+
+    import_nodes: List[Union[ast.ImportFrom, ast.Import]] = []
+    for node in getattr(file_ast_tree, 'body', []):
+        if isinstance(node, (ast.ImportFrom, ast.Import)):
+            import_nodes.append(node)
+        if hasattr(node, 'body') and not isinstance(node, tuple(nodes_with_local_scope)):
+            import_nodes += get_all_global_import_nodes(node)
+    return import_nodes
+
+
+def get_full_import_pathes(import_node: Union[ast.ImportFrom, ast.Import]) -> List[str]:
+    if isinstance(import_node, ast.Import):
+        return [n.name for n in import_node.names]
+    elif isinstance(import_node, ast.ImportFrom):
+        return [f'{import_node.module}.{n.name}' for n in import_node.names]
