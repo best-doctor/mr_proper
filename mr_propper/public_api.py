@@ -27,4 +27,4 @@ def is_function_pure(
     funcdef_node: AnyFuncdef,
     with_errors: bool = False,
 ) -> Union[bool, PureCheckResult]:
-    pass
+    return True, []

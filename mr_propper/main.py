@@ -6,7 +6,9 @@ from mr_propper.utils.ast import get_ast_tree, get_all_funcdefs_from
 
 
 def parse_args() -> argparse.Namespace:
-    pass
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filename', type=str)
+    return parser.parse_args()
 
 
 def main() -> None:
