@@ -45,6 +45,12 @@ Usage inside Python code sample:
     (True, [])
 
 
+## Parameters
+CLI interface:
+- `filepath`: path to .py file to check;
+- `--recursive`: require inner calls to be pure for function pureness.
+
+
 ## Code prerequisites
 1. Python 3.7+;
 2. Functions are fully type-annotated;

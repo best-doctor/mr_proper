@@ -8,7 +8,7 @@ from mr_propper.pure_validators import (
     has_returns, not_mutates_args, not_has_local_imports, not_has_forbidden_arguments_types,
     not_uses_self_or_class_vars,
 )
-
+from mr_propper.utils.ast_pure import get_not_pure_internal_calls
 
 PureValidatorType = Callable[[AnyFuncdef, Optional[ast.Module]], List[str]]
 
@@ -18,6 +18,8 @@ def is_function_pure(
     funcdef_node: AnyFuncdef,
     file_ast_tree: ast.Module,
     with_errors: Literal[False],
+    recursive: bool = False,
+    pyfilepath: str = None,
 ) -> bool:
     ...
 
@@ -27,6 +29,8 @@ def is_function_pure(
     funcdef_node: AnyFuncdef,
     file_ast_tree: ast.Module,
     with_errors: Literal[True],
+    recursive: bool = False,
+    pyfilepath: str = None,
 ) -> PureCheckResult:
     ...
 
@@ -35,6 +39,8 @@ def is_function_pure(
     funcdef_node: AnyFuncdef,
     file_ast_tree: ast.Module = None,
     with_errors: bool = False,
+    recursive: bool = False,
+    pyfilepath: str = None,
 ) -> Union[bool, PureCheckResult]:
     validators: List[PureValidatorType] = [
         has_no_blacklisted_calls,
@@ -53,4 +59,9 @@ def is_function_pure(
         if validator_errors:
             is_pure = False
             errors += list(set(validator_errors))
+
+    if recursive and file_ast_tree and pyfilepath:
+        for dirty_call_name in get_not_pure_internal_calls(funcdef_node, file_ast_tree, pyfilepath):
+            errors.append(f'it calls for non-pure function ({dirty_call_name})')
+
     return (is_pure, errors) if with_errors else is_pure

@@ -1,5 +1,4 @@
 import ast
-import builtins
 from typing import List, Optional, Callable, cast
 
 from mr_propper.common_types import AnyFuncdef
@@ -9,11 +8,8 @@ from mr_propper.config import (
 from mr_propper.utils.ast import (
     get_nodes_from_funcdef_body, is_imported_from_stdlib,
     get_local_var_names_from_funcdef,
-)
+    BUILTINS_LIST)
 from mr_propper.utils.python_naming import is_python_class_name
-
-
-BUILTINS_LIST = {b for b in dir(builtins) if not b.startswith('_')}
 
 
 def has_no_blacklisted_calls(

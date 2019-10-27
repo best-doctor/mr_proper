@@ -1,4 +1,5 @@
 import ast
+import builtins
 from typing import Optional, List, Union, Type, TypeVar, cast
 
 from stdlib_list import stdlib_list
@@ -10,6 +11,7 @@ from mr_propper.config import TARGET_PYTHON_VERSION
 T = TypeVar('T', bound=ast.AST)
 
 
+BUILTINS_LIST = {b for b in dir(builtins) if not b.startswith('_')}
 STDLIB_MODULES_NAMES = stdlib_list(TARGET_PYTHON_VERSION)
 
 
@@ -20,9 +22,18 @@ def get_ast_tree(pyfilepath: str) -> Optional[ast.Module]:
         except UnicodeDecodeError:
             return None
     try:
-        return ast.parse(file_content)
+        ast_tree = ast.parse(file_content)
     except SyntaxError:
         return None
+    set_parents(ast_tree)
+    return ast_tree
+
+
+def set_parents(ast_tree: ast.AST) -> None:
+    for node in ast.walk(ast_tree):
+        for child in ast.iter_child_nodes(node):
+            child.parent = node  # type: ignore
+    ast_tree.parent = None  # type: ignore
 
 
 def get_all_funcdefs_from(ast_tree: ast.AST) -> List[AnyFuncdef]:

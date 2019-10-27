@@ -8,6 +8,7 @@ from mr_propper.utils.ast import get_ast_tree, get_all_funcdefs_from
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument('filename', type=str)
+    parser.add_argument('--recursive', action='store_true')
     return parser.parse_args()
 
 
@@ -19,7 +20,13 @@ def main() -> None:
         return
     for funcdef_node in get_all_funcdefs_from(ast_tree):
         function_name = funcdef_node.name
-        is_pure, pureness_errors = is_function_pure(funcdef_node, ast_tree, with_errors=True)
+        is_pure, pureness_errors = is_function_pure(
+            funcdef_node,
+            ast_tree,
+            with_errors=True,
+            recursive=args.recursive,
+            pyfilepath=args.filename,
+        )
         if is_pure:
             sys.stdout.write(f'{function_name} is pure!\n')
         else:
