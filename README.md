@@ -26,7 +26,7 @@ and blacklisted attributes access (like `smth.count`);
 3. that function has al least one return;
 4. that function not mutates it's arguments;
 5. that function has no local imports;
-6. that function has no arguments of forbidden types (like ORM objcets);
+6. that function has no arguments of forbidden types (like ORM objects);
 7. that function not uses `self`, `class` or `super`;
 8. that function has calls of only pure functions.
 
