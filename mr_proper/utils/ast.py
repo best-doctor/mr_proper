@@ -69,6 +69,11 @@ def get_local_var_names_from_funcdef(funcdef_node: AnyFuncdef) -> List[str]:
     for comprehension in get_nodes_from_funcdef_body(funcdef_node, [ast.comprehension, ast.For]):
         comprehension = cast(ast.comprehension, comprehension)
         local_vars_names += get_local_var_names_from_loop(comprehension)
+    local_vars_names += {
+        n.name
+        for n in ast.walk(funcdef_node)
+        if isinstance(n, ast.ExceptHandler) and n.name
+    }
     return local_vars_names
 
 
