@@ -66,7 +66,7 @@ def uses_only_args_and_local_vars(
 
 
 def has_returns(funcdef_node: AnyFuncdef, file_ast_tree: Optional[ast.Module]) -> List[str]:
-    if not get_nodes_from_funcdef_body(funcdef_node, [ast.Return]):
+    if not get_nodes_from_funcdef_body(funcdef_node, [ast.Return, ast.Yield]):
         return ['it has no returns']
     return []
 
