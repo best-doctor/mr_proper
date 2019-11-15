@@ -1,5 +1,8 @@
 check:
-	make -j2 types style
+	make -j3 test types style
+
+test:
+	python -m pytest
 
 types:
 	mypy --strict --implicit-optional .
