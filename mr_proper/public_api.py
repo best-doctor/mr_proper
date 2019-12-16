@@ -67,6 +67,7 @@ def is_function_pure(
 
     if recursive and file_ast_tree and pyfilepath:
         for dirty_call_name in get_not_pure_internal_calls(funcdef_node, file_ast_tree, pyfilepath):
+            is_pure = False
             errors.append(f'it calls for non-pure function ({dirty_call_name})')
 
     return (is_pure, errors) if with_errors else is_pure
