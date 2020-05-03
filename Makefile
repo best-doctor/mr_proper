@@ -2,7 +2,7 @@ check:
 	make -j2 test types style requirements
 
 test:
-	python -m pytest
+	python -m pytest --cov=mr_proper --cov-report=xml
 
 types:
 	mypy --strict --implicit-optional .

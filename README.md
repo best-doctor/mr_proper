@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/best-doctor/mr_proper.svg?branch=master)](https://travis-ci.org/best-doctor/mr_proper)
 [![PyPI version](https://badge.fury.io/py/mr-proper.svg)](https://badge.fury.io/py/mr-proper)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4b2234d95d5c4944e2e6/maintainability)](https://codeclimate.com/github/best-doctor/mr_proper/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4b2234d95d5c4944e2e6/test_coverage)](https://codeclimate.com/github/best-doctor/mr_proper/test_coverage)
 
 Static Python code analyzer, that tries to check if functions in code are
 [pure](https://en.wikipedia.org/wiki/Pure_function) or not and why.
