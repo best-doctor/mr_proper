@@ -1,6 +1,7 @@
 import ast
+import sys
 from functools import partial
-from typing import overload, Union, List, Callable, Optional
+from typing import overload, Union, List, Callable, Optional, Any
 from typing_extensions import Literal
 
 from mr_proper.common_types import AnyFuncdef, PureCheckResult
@@ -14,6 +15,11 @@ from mr_proper.utils.ast_pure import get_not_pure_internal_calls
 PureValidatorType = Callable[[AnyFuncdef, Optional[ast.Module]], List[str]]
 
 
+if sys.version_info < (3, 5, 2):
+    def overload(callable_function: Callable[..., Any]) -> Callable[..., Any]:  # noqa: F811
+        return callable_function
+
+
 @overload
 def is_function_pure(
     funcdef_node: AnyFuncdef,
@@ -25,7 +31,7 @@ def is_function_pure(
     ...
 
 
-@overload
+@overload  # noqa: F811
 def is_function_pure(
     funcdef_node: AnyFuncdef,
     file_ast_tree: ast.Module,
@@ -36,7 +42,7 @@ def is_function_pure(
     ...
 
 
-def is_function_pure(
+def is_function_pure(  # noqa: F811
     funcdef_node: AnyFuncdef,
     file_ast_tree: ast.Module = None,
     with_errors: bool = False,

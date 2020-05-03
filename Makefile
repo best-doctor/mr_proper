@@ -1,5 +1,5 @@
 check:
-	make -j3 test types style
+	make -j2 test types style requirements
 
 test:
 	python -m pytest
@@ -9,3 +9,7 @@ types:
 
 style:
 	flake8 --use-varnames-strict-mode .
+	mdl README.md
+
+requirements:
+	safety check -r requirements.txt

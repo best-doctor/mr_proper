@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import ast
 import builtins
-from typing import Optional, List, Union, Type, TypeVar, cast
+from typing import Optional, List, Union, TypeVar, cast
 
 from stdlib_list import stdlib_list
 
 from mr_proper.common_types import AnyFuncdef
 from mr_proper.config import TARGET_PYTHON_VERSION
+
+if False:  # TYPE_CHECKING
+    from typing import Type
 
 
 T = TypeVar('T', bound=ast.AST)
