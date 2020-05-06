@@ -23,7 +23,7 @@ setup(
     install_requires=[
         'setuptools',
         'stdlib-list>=0.5.0',
-        'mypy-extensions==0.4.1',
+        'mypy-extensions>=0.4.1',
     ],
     entry_points={
         'console_scripts': [
