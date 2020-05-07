@@ -32,7 +32,7 @@ def is_function_pure(
 
 
 @overload  # noqa: F811
-def is_function_pure(
+def is_function_pure(  # noqa: F811
     funcdef_node: AnyFuncdef,
     file_ast_tree: ast.Module,
     with_errors: Literal[True],
