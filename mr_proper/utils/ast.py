@@ -80,7 +80,7 @@ def get_local_var_names_from_funcdef(funcdef_node: AnyFuncdef) -> List[str]:
         for n in ast.walk(funcdef_node)
         if isinstance(n, ast.ExceptHandler) and n.name
     }
-    return list(set(local_vars_names))
+    return sorted(set(local_vars_names))
 
 
 def get_local_var_names_from_loop(loop_node: Union[ast.comprehension, ast.For]) -> List[str]:

@@ -1,8 +1,9 @@
 import ast
+import os
 
 from mr_proper.utils.ast import (
     get_all_funcdefs_from, is_imported_from_stdlib, get_all_global_import_nodes,
-    get_local_var_names_from_loop, get_local_var_names_from_funcdef)
+    get_local_var_names_from_loop, get_local_var_names_from_funcdef, get_ast_tree)
 from mr_proper.utils.ast_pure import extract_import_info_from_import_node
 
 
@@ -67,3 +68,16 @@ def foo():
     a: int = 1
     """.strip()).body[0]
     assert get_local_var_names_from_funcdef(funcdef) == ['a']
+
+
+def test_local_name_extractor_extracts_from_list_comprehensions():
+    funcdef = ast.parse("""
+def foo(b):
+    return [a + 2 * b for (a, b) in b]
+    """.strip()).body[0]
+    assert get_local_var_names_from_funcdef(funcdef) == ['a', 'b']
+
+
+def test_get_ast_tree_not_fails_on_syntax_error():
+    test_file_path = os.path.join(os.path.dirname(__file__), 'test_files/errored.py')
+    assert get_ast_tree(test_file_path) is None
