@@ -61,7 +61,7 @@ Usage inside Python code sample:
 
 ```jupyterpython
 >>> import ast
->>> from mr_propper import is_function_pure
+>>> from mr_propper.utils import is_function_pure
 >>> funcdef = ast.parse('''
     def add_one(n: int) -> int:
         return n + 1
