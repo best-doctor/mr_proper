@@ -1,16 +1,9 @@
+import click
 import os
 import sys
-import argparse
 
 from mr_proper.public_api import is_function_pure
 from mr_proper.utils.ast import get_ast_tree, get_all_funcdefs_from
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('file_or_directory', type=str)
-    parser.add_argument('--recursive', action='store_true')
-    return parser.parse_args()
 
 
 def check_file(path_to_file: str, recursive: bool) -> None:
@@ -36,17 +29,13 @@ def check_file(path_to_file: str, recursive: bool) -> None:
                 sys.stdout.write(f'\t{error}\n')
 
 
-def main() -> None:
-    recursive = False
-    args = parse_args()
-    if not os.path.exists(args.file_or_directory):
-        sys.stdout.write('File or directory not exist!\n')
-        return
-    path_to_files = [args.file_or_directory]
-    if args.recursive:
-        recursive = args.recursive
-    if os.path.isdir(args.file_or_directory):
-        directoty_path = os.path.abspath(args.file_or_directory)
+@click.command()
+@click.option('--recursive', is_flag=True, help='Recursive')
+@click.argument('file_or_directory', type=click.Path(exists=True))
+def main(file_or_directory: str, recursive: bool) -> None:
+    path_to_files = [file_or_directory]
+    if os.path.isdir(file_or_directory):
+        directoty_path = os.path.abspath(file_or_directory)
         path_to_files = [
             os.path.join(root, filename) for root, dirs, files in os.walk(directoty_path) for filename in files
         ]
