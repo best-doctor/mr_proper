@@ -23,13 +23,22 @@ setup(
     install_requires=[
         'setuptools',
         'stdlib-list>=0.5.0',
-        'mypy-extensions>=0.4.1',
     ],
     entry_points={
         'console_scripts': [
             'mr_proper = mr_proper.main:main',
         ],
     },
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Operating System :: OS Independent',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+    ],
     url='https://github.com/best-doctor/mr_proper',
     license='MIT',
     py_modules=[package_name],
