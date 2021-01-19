@@ -21,8 +21,11 @@ setup(
     author='Ilya Lebedev',
     author_email='melevir@gmail.com',
     install_requires=[
+        'click==7.1.2',
+        'mypy-extensions==0.4.3',
         'setuptools',
         'stdlib-list>=0.5.0',
+        'typing-extensions==3.7.4.3',
     ],
     entry_points={
         'console_scripts': [
