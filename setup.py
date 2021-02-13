@@ -11,12 +11,12 @@ def get_long_description() -> str:
 
 setup(
     name=package_name,
-    description='Package to find typos in russian text.',
+    description='Static Python code analyzer, that tries to check if functions in code are pure or not and why.',
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
     packages=find_packages(),
     include_package_data=True,
-    keywords='typos',
+    keywords=['static-analyzer', 'pure-function'],
     version='0.0.6',
     author='Ilya Lebedev',
     author_email='melevir@gmail.com',
