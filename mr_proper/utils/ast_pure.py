@@ -3,7 +3,10 @@ import inspect
 import importlib.util
 from typing import Optional, List, cast
 
-from mypy_extensions import TypedDict
+try:
+    from typing import TypedDict
+except ImportError:
+    from mypy_extensions import TypedDict
 
 from mr_proper.common_types import AnyFuncdef
 from mr_proper.utils.ast import BUILTINS_LIST, get_nodes_from_funcdef_body, get_ast_tree

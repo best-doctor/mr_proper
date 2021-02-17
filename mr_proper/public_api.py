@@ -2,7 +2,10 @@ import ast
 import sys
 from functools import partial
 from typing import overload, Union, List, Callable, Optional, Any
-from typing_extensions import Literal
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
 
 from mr_proper.common_types import AnyFuncdef, PureCheckResult
 from mr_proper.pure_validators import (
