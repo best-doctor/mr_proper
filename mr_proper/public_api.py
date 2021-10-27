@@ -2,7 +2,6 @@ import ast
 import sys
 from functools import partial
 from typing import overload, Union, List, Callable, Optional, Any
-from typing_extensions import Literal
 
 from mr_proper.common_types import AnyFuncdef, PureCheckResult
 from mr_proper.pure_validators import (
@@ -11,6 +10,11 @@ from mr_proper.pure_validators import (
     not_uses_self_or_class_vars,
 )
 from mr_proper.utils.ast_pure import get_not_pure_internal_calls
+
+if sys.version_info >= (3, 8):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
 
 PureValidatorType = Callable[[AnyFuncdef, Optional[ast.Module]], List[str]]
 

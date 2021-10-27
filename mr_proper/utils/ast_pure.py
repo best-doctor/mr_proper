@@ -1,12 +1,16 @@
 import ast
 import inspect
 import importlib.util
+import sys
 from typing import Optional, List, cast
-
-from mypy_extensions import TypedDict
 
 from mr_proper.common_types import AnyFuncdef
 from mr_proper.utils.ast import BUILTINS_LIST, get_nodes_from_funcdef_body, get_ast_tree
+
+if sys.version_info >= (3, 8):
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 
 
 class EntityImportInfo(TypedDict):
