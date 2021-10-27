@@ -1,7 +1,17 @@
+from typing import Optional
+
 from setuptools import setup, find_packages
 
 
 package_name = 'mr_proper'
+
+
+def get_version() -> Optional[str]:
+    with open('import_me/__init__.py', 'r') as f:
+        lines = f.readlines()
+    for line in lines:
+        if line.startswith('__version__'):
+            return line.split('=')[-1].strip().strip("'")
 
 
 def get_long_description() -> str:
@@ -17,14 +27,14 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     keywords=['static-analyzer', 'pure-function'],
-    version='0.0.6',
+    version=get_version(),
     author='Ilya Lebedev',
     author_email='melevir@gmail.com',
     install_requires=[
-        'click==7.1.2',
+        'click>=7.1.2',
         'setuptools',
         'stdlib-list>=0.5.0',
-        'typing-extensions==3.7.4.3;python_version<"3.8"',
+        'typing-extensions>=3.7.4.3;python_version<"3.8"',
     ],
     entry_points={
         'console_scripts': [
