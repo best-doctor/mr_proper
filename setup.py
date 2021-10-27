@@ -7,7 +7,7 @@ package_name = 'mr_proper'
 
 
 def get_version() -> Optional[str]:
-    with open('import_me/__init__.py', 'r') as f:
+    with open('mr_proper/__init__.py', 'r') as f:
         lines = f.readlines()
     for line in lines:
         if line.startswith('__version__'):
