@@ -32,7 +32,7 @@ pip install mr_proper
 1. that function not uses `self`, `class` or `super`;
 1. that function has calls of only pure functions.
 
-This list is not enought to say that function is pure and some points
+This list is not enough to say that function is pure and some points
 are quite controversial, but it's a nice start.
 
 ## Example
